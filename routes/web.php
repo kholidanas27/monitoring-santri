@@ -17,4 +17,16 @@ use App\Http\Controllers\Admin\AdminController;
 //     return view('welcome');
 // });
 
-Route::get('/', [AdminController::class, 'index']);
+// Route::get('/', [AdminController::class, 'index']);
+Route::get('/', function () {
+    if(Auth::check()){
+        return view('home');
+    }
+    else{
+        return view('auth.login');
+    }
+});
+
+Auth::routes();
+
+Route::get('/home', [AdminController::class, 'index'])->name('home');
