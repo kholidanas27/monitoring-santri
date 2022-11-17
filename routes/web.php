@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,20 +14,12 @@ use App\Http\Controllers\Admin\AdminController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/', [AdminController::class, 'index']);
 Route::get('/', function () {
     if(Auth::check()){
-        return view('home');
+        return view('layouts.main-home');
     }
     else{
-        return view('auth.login');
+        return view('layouts.main-home');
     }
 });
 
-Auth::routes();
-
-Route::get('/home', [AdminController::class, 'index'])->name('home');
