@@ -15,11 +15,6 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    if(Auth::check()){
-        return view('layouts.main-home');
-    }
-    else{
-        return view('layouts.main-home');
-    }
+    return view('welcome');
 });
 
