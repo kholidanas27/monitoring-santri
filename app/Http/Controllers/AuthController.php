@@ -34,19 +34,22 @@ class AuthController extends Controller
         try {
             $data = [
                 'grant_type' => 'password',
-                'client_id' => '3',
-                'client_secret' => 'UKuDhPAk84wPOHxoBQ6klveojUHuxU8HW2EN49wC',
+                'client_id' => '1',
+                'client_secret' => 'L8HdCVbdeDzWT1oGoyorJL9FIqtTtjwN0VWXH3Rd',
                 'username' => $request->username,
                 'password' => $request->password
             ];
             $httpResponse = app()->handle(
                 Request::create('/oauth/token', 'POST', $data)
             );
-            $result = json_decode($httpResponse->getContent());
-            if ($httpResponse->getStatusCode() !== 200) {
-                throw new Exception($result->message);
+            if ($httpResponse->isOk()) {
+                $res = $httpResponse->getContent();
+                $res = json_decode($res, true);
+                return $res;
+            } else {
+                return response()->json(['message' => 'Unauthorized'], 401);
             }
-            return response()->json($result);
+            return response($httpResponse, $httpResponse->status());
         } catch (Exception $ex) {
             return response()->json(
                 ['message' => $ex->getMessage()],
